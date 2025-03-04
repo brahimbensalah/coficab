@@ -1,0 +1,23 @@
+ ID          User      Page  Result      Time           
+--------------------------------------------------------
+ 61                       1  Finished    --------------
+ 62                       1  Finished    --------------
+ 63          mbjemaa      2  Finished    24/12/26 11:28
+ 64          mbjemaa      1  Finished    24/12/26 11:28
+ 65                       1  Finished    --------------
+ 66                       4  Finished    --------------
+ 67                       1  Finished    --------------
+ 68                       1  Finished    --------------
+ 69                       4  Finished    --------------
+ 70                       2  Finished    --------------
+ 71                       4  Finished    --------------
+ 72                       2  Finished    --------------
+ 73                       1  Finished    --------------
+ 74                       1  Finished    --------------
+ 75                       1  Finished    --------------
+ 76                       1  Finished    --------------
+ 77                      72  Finished    --------------
+ 78                       1  Finished    --------------
+ 79                       2  Finished    --------------
+ 80                       1  Finished    --------------
+
