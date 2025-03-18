@@ -21,7 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       Date: {
-        type: DataTypes.STRING,
+        // type: DataTypes.STRING,
+        // allowNull: false, 
+        type: DataTypes.DATEONLY, // 📌 Stocke uniquement la date (AAAA-MM-JJ)
         allowNull: false,
       },
       Time: {

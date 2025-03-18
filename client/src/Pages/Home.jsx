@@ -5,6 +5,8 @@ import '../CSS/Home.css';
 function Home() {
   const [logs, setLogs] = useState([]);
   const [file, setFile] = useState(null);
+  const [filtretype, setType] = useState("all");
+  const [filtreName, setName] = useState("");
   
   useEffect(()=>{
     fetchhistorie();
@@ -14,6 +16,30 @@ function Home() {
      setFile(event.target.files[0]); // Store the selected file
    
   };
+
+  const handleFiltre = (filtretype,filtreName) => {
+    if(filtretype === "impr") { axios.get(`http://localhost:5000/api/imprime/impressionsByImp/${filtreName}`)
+      .then((data)=>{setLogs(data.data);})
+      .catch(()=>{})   
+  }
+  else if(filtretype === "user") { axios.get(`http://localhost:5000/api/imprime/impressionsByUser/${filtreName}`)
+     .then((data)=>{setLogs(data.data);})
+     .catch(()=>{})   
+  }
+  else if(filtretype === "all") { axios.get(`http://localhost:5000/api/imprime/impressions`)
+     .then((data)=>{setLogs(data.data);})
+     .catch(()=>{})   
+  }
+  else {
+    alert("Name dosn't existe !");
+
+  }
+  
+
+   
+
+
+}
 
   const handleSubmit = async () => {
     
@@ -32,8 +58,7 @@ function Home() {
       });
       alert("File uploaded successfully!");
     } catch (error) {
-      console.log("Upload error:", error);
-      alert("Error uploading file.");
+      // alert("Error uploading file.");
     }
   };
 
@@ -76,20 +101,23 @@ function Home() {
     
     <div className="row">
       <div className="col-md-4">
-      <select class="form-select"  aria-label=" select ">
+      <select className="form-select" name="filtre"  onChange={e => setType(e.target.value)}  aria-label=" select ">
         
-        <option value="1">Nom de l'imprimante </option>
-        <option value="2">Nom de l'utilisateur</option>
+        <option value="all">All </option>
+        <option value="impr">Nom de l'imprimante </option>
+        <option value="user">Nom de l'utilisateur</option>
         {/* <option value="3">Par date</option> */}
       </select>
       </div>
       <div className="col-md-4">
         
-        <input type="text" aria-label="Last name" class="form-control"/>
+        <input type="text"  onChange={(e)=>{setName(e.target.value)}} aria-label="Last name" className="form-control"/>
 
       </div>
      <div className="col-md-4">
-     <button onClick={handleSubmit} className=" rounded" style={{width:"150px",height:"35px"}}>
+     <button onClick={()=>{
+      handleFiltre(filtretype,filtreName)
+     }} className=" rounded" style={{width:"150px",height:"35px"}}>
         filtre
       </button>
      </div>
