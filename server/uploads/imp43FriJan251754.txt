@@ -1,0 +1,23 @@
+ ID          User      Page  Result      Time           
+--------------------------------------------------------
+ 317         mbjemaa      5  Finished    25/01/02 15:00
+ 318         mbjemaa     10  Finished    25/01/02 15:04
+ 319         mbjemaa      5  Finished    25/01/02 15:13
+ 320         mbjemaa      5  Finished    25/01/02 15:15
+ 321         moferchi     1  Finished    25/01/02 17:45
+ 322         wmejri       1  Finished    25/01/03 08:57
+ 323         wmejri       1  Finished    25/01/03 08:57
+ 324         wmejri       1  Finished    25/01/03 10:03
+ 325         wmejri       1  Finished    25/01/03 10:03
+ 326         wmejri       1  Finished    25/01/03 10:03
+ 327         wmejri       1  Finished    25/01/03 10:03
+ 328         wmejri       1  Finished    25/01/03 10:04
+ 329         wmejri       1  Finished    25/01/03 10:08
+ 330         Administ     2  Finished    25/01/03 11:29
+ 331         Administ     2  Finished    25/01/03 11:31
+ 332         mbjemaa      2  Finished    25/01/03 11:46
+ 333         mbjemaa      1  Finished    25/01/03 11:47
+ 334         Administ     1  Finished    25/01/03 12:13
+ 335         Administ     1  Finished    25/01/03 12:13
+ 336         Ahmed BO     7  Finished    25/01/03 14:07
+
