@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const userRoutes = require('./routes/imprime.routes')
+const imprimeRoutes = require('./routes/imprime.routes')
+const printRoutes = require('./routes/printer.routes')
 require ('./Models/index')
 
 // const db = require('./database-mysql');
@@ -18,7 +19,8 @@ app.use(express.static("uploads"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/../client/dist"));
 
-app.use("/api/imprime",userRoutes);
+app.use("/api/imprime",imprimeRoutes);
+app.use("/api/printer",printRoutes);
 
 
 
