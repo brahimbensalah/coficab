@@ -29,14 +29,26 @@ async function downloadFile() {
             secure: false,
         });
 
-        console.log("✅ Connected to FTP");
+       
 
         const remoteFile = "prnlog"; // Adjust this if needed
         const localFile = path.join(uploadDirectory, generateFileName());
 
         console.log(`📂 Downloading ${remoteFile} to ${localFile}...`);
         await client.downloadTo(localFile, remoteFile);
-        console.log("✅ File downloaded successfully");
+        // console.log("✅ File downloaded successfully");
+        // console.log("✅ Connected to FTP");
+        // console.log('=================ftp===================');
+        // console.log(ftp);
+        // console.log('====================================');
+
+        // ftp.list((err, list) => {
+        //     if (err) {
+        //         console.error("Erreur lors de la récupération de la liste des fichiers :", err);
+        //     } else {
+        //         console.log("📂 Fichiers disponibles sur le FTP :", list.map(f => f.name));
+        //     }
+        // });
 
     } catch (err) {
         console.error("❌ FTP Download Error:", err);
