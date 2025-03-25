@@ -74,9 +74,19 @@ function Home() {
 
 //   
 <>
-<div className="container">
+
+
+{/* <!-- Page Content --> */}
+
+
+<div class="container-fluid">
+<h1>Gestion des Impressions</h1>
+
+
+
+
+<div className="">
   <br />
-  <h1>Gestion des Impressions</h1>
   {/* <div className="p-6">
       <div className="bg-white shadow-md rounded-lg p-4">
       <input type="file" onChange={handleFileUpload} className="border border-gray-300 rounded p-2 w-full" />
@@ -159,6 +169,10 @@ function Home() {
     </tbody>
   </table>
 </div>
+
+</div>
+
+
 
 </>
   );
