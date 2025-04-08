@@ -6,6 +6,7 @@ const printerController = require("../controllers/printerController");
 const router = express.Router();
 
 router.get("/getAllPrinter", printerController.getAllPrints);
+router.get("/getAllPrinterName", printerController.getAllPrintsName);
 router.post("/addPrinter", printerController.addPrint);
 router.delete("/deletePrinter/:id", printerController.deletePrint);
 router.patch("/updatePrinter/:id", printerController.updatePrint);

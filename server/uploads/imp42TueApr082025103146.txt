@@ -1,0 +1,10 @@
+ ID          User      Page  Result      Time           
+--------------------------------------------------------
+ 1           nsellami     1  Finished    25/04/07 14:39
+ 2           nsellami     1  Finished    25/04/07 14:41
+ 3           hhammemi     1  Finished    25/04/07 14:55
+ 4           souertan     2  Finished    25/04/07 14:58
+ 5           mamejri      2  Finished    25/04/07 17:26
+ 6           nsellami     1  Finished    25/04/07 16:41
+ 7           mamejri      1  Finished    25/04/07 18:01
+

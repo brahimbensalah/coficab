@@ -1,22 +1,36 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import '../CSS/Home.css';
+import logo from '../Images/logo.png'
 
 function Home() {
   const [logs, setLogs] = useState([]);
+  const [printerName, setprinterName] = useState([]);
   const [file, setFile] = useState(null);
   const [filtretype, setType] = useState("all");
   const [filtreName, setName] = useState("");
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const formattedTime = currentTime.toLocaleString(); // e.g. "4/8/2025, 10:15:30 AM"
+
   
   useEffect(()=>{
     fetchhistorie();
+    getAllprinterName();
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer); // cleanup
   },[])
-  
-  const handleFileUpload = (event) => {
-     setFile(event.target.files[0]); // Store the selected file
-   
-  };
 
+
+  
+  // const handleFileUpload = (event) => {
+  //    setFile(event.target.files[0]); // Store the selected file   
+  // };
+    
   const handleFiltre = (filtretype,filtreName) => {
     if(filtretype === "impr") { axios.get(`http://localhost:5000/api/imprime/impressionsByImp/${filtreName}`)
       .then((data)=>{setLogs(data.data);})
@@ -33,40 +47,56 @@ function Home() {
   else {
     alert("Name dosn't existe !");
 
-  }
-  
-
-   
-
-
+  }  
+}
+  const getAllprinterName = () => {
+  axios.get(`http://localhost:5000/api/printer/getAllPrinterName`)
+  .then((data)=>{
+    setprinterName(data.data);  
+  })
+  .catch(()=>{})   
 }
 
-  const handleSubmit = async () => {
-    
-    
-    if (!file) {
-      alert("Please select a file first!");
-      return;
-    }
 
-    const formData = new FormData();
-    formData.append("file", file);
 
-    try {
-      const response = await axios.post("http://localhost:5000/api/imprime/upload", formData, {
-         headers: { "Content-Type": "multipart/form-data" },
-      });
-      alert("File uploaded successfully!");
-    } catch (error) {
-      // alert("Error uploading file.");
-    }
-  };
+
+  // const handleSubmit = async () => {    
+    
+  //   if (!file) {
+  //     alert("Please select a file first!");
+  //     return;
+  //   }
+
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+
+  //   try {
+  //     const response = await axios.post("http://localhost:5000/api/imprime/upload", formData, {
+  //        headers: { "Content-Type": "multipart/form-data" },
+  //     });
+  //     alert("File uploaded successfully!");
+  //   } catch (error) {
+  //     // alert("Error uploading file.");
+  //   }
+  // };
 
   const fetchhistorie=()=>{
     axios.get(`http://localhost:5000/api/imprime/impressions`)
     .then((data)=>{setLogs(data.data);})
     .catch(()=>{})
   }
+
+
+  const handleStartChange = (e) => {
+    const newStartDate = e.target.value;
+    setStartDate(newStartDate);
+
+    // Si la date de fin est plus petite que la nouvelle date de début, on la met à jour
+    if (endDate && newStartDate > endDate) {
+      setEndDate(newStartDate);
+    }
+  };
+
 
     
 
@@ -79,57 +109,70 @@ function Home() {
 {/* <!-- Page Content --> */}
 
 
+<nav class="navbar " style={{backgroundColor:"#020495"}}>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src={logo} alt="" class="d-inline-block align-text-top"/>      
+    </a>
+  <span className="navbar-text text-white d-flex">
+          {formattedTime}
+        </span>
+  </div>
+</nav>
 <div class="container-fluid">
-<h1>Gestion des Impressions</h1>
 
 
 
 
-<div className="">
-  <br />
-  {/* <div className="p-6">
-      <div className="bg-white shadow-md rounded-lg p-4">
-      <input type="file" onChange={handleFileUpload} className="border border-gray-300 rounded p-2 w-full" />
-      
-      <button onClick={handleSubmit} className="mt-2 bg-blue-500  p-2 rounded" style={{margin:"15px",width:"150px"}}>
-        Upload
-      </button>
-      </div>
-  </div> */}
-
-
-  
-  
- 
+<div className=""> 
  <br />
  <br />
  <br />
 
 
   <div className="filter-section">
-    <h3>
-      filtre avec </h3>
+   
     
     <div className="row">
       <div className="col-md-4">
-      <select className="form-select" name="filtre"  onChange={e => setType(e.target.value)}  aria-label=" select ">
-        
-        <option value="all">All </option>
-        <option value="impr">Nom de l'imprimante </option>
-        <option value="user">Nom de l'utilisateur</option>
-        {/* <option value="3">Par date</option> */}
+      <select className="form-select" name="filtre"  onChange={e => setType(e.target.value)}  aria-label=" select ">    
+      <option value="all">All</option>
+      {printerName.map((name, key) => (
+              <option value={name} key={key}>
+                {name}
+              </option>
+        ))} 
       </select>
       </div>
       <div className="col-md-4">
-        
-        <input type="text"  onChange={(e)=>{setName(e.target.value)}} aria-label="Last name" className="form-control"/>
+      <div className="d-flex align-items-center gap-2" style={{marginTop:"-5px"}}>
+      <label htmlFor="start" className="form-label m-0">De :</label>
+      <input
+        type="date"
+        id="start"
+        className="form-control"
+        value={startDate}
+        onChange={handleStartChange}
+      />
+
+      <label htmlFor="end" className="form-label m-0">À :</label>
+      <input
+        type="date"
+        id="end"
+        className="form-control"
+        value={endDate}
+        min={startDate} // empêche de choisir une date avant startDate
+        onChange={(e) => setEndDate(e.target.value)}
+      />
+    </div>
 
       </div>
      <div className="col-md-4">
-     <button onClick={()=>{
+     <button  onClick={()=>{
       handleFiltre(filtretype,filtreName)
-     }} className=" rounded" style={{width:"150px",height:"35px"}}>
-        filtre
+     }} className="custom-btn btn-3" >
+        
+        <span>filtre</span>
       </button>
      </div>
     </div>

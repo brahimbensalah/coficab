@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 // FTP Credentials
-const FTP_HOST = "172.20.200.166";
+const FTP_HOST = "172.20.200.42";
 const FTP_USER = "admin";
 const FTP_PASS = "admin";
 const p = FTP_HOST.lastIndexOf('.');

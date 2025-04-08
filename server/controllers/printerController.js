@@ -17,6 +17,16 @@ module.exports = {
         res.status(500).json({ message: "Erreur lors de la récupération.", error });
       }
     },
+    getAllPrintsName: async function (req, res) {
+      try {
+        const printers = await Printer.findAll({
+          attributes: ['Name'],
+        });
+        res.status(200).json(printers.map(p => p.Name));
+      } catch (error) {
+        res.status(500).json({ message: "Erreur lors de la récupération.", error });
+      }
+    },
     addPrint: async function (req, res) {
       try {
         const printer= await db.Printer.create(req.body)
