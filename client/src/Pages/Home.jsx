@@ -9,10 +9,14 @@ function Home() {
   const [file, setFile] = useState(null);
   const [filtretype, setType] = useState("all");
   const [filtreName, setName] = useState("");
-  const [currentTime, setCurrentTime] = useState(new Date());
 
+
+  //for filter date
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+
+  //navbarre date
+  const [currentTime, setCurrentTime] = useState(new Date());
   const formattedTime = currentTime.toLocaleString(); // e.g. "4/8/2025, 10:15:30 AM"
 
   
@@ -31,24 +35,69 @@ function Home() {
   //    setFile(event.target.files[0]); // Store the selected file   
   // };
     
-  const handleFiltre = (filtretype,filtreName) => {
-    if(filtretype === "impr") { axios.get(`http://localhost:5000/api/imprime/impressionsByImp/${filtreName}`)
-      .then((data)=>{setLogs(data.data);})
-      .catch(()=>{})   
-  }
-  else if(filtretype === "user") { axios.get(`http://localhost:5000/api/imprime/impressionsByUser/${filtreName}`)
-     .then((data)=>{setLogs(data.data);})
-     .catch(()=>{})   
-  }
-  else if(filtretype === "all") { axios.get(`http://localhost:5000/api/imprime/impressions`)
-     .then((data)=>{setLogs(data.data);})
-     .catch(()=>{})   
-  }
-  else {
-    alert("Name dosn't existe !");
+  const handleFiltre = (filtretype,startDate,endDate) => {
 
-  }  
+    if((filtretype === "all")) { 
+          if((startDate === '') && (endDate === '')){
+
+            axios.get(`http://localhost:5000/api/imprime/impressions`)
+            .then((data)=>{
+              console.log('================type 1-1====================');
+              console.log(data.data);
+              console.log('====================================');
+              setLogs(data.data);
+            })
+            .catch(()=>{})   
+          }
+          else if ((startDate !== '') && ( endDate === '')){
+            axios.get(`http://localhost:5000/api/imprime/impressionsByStartDate/${startDate}`)
+            .then((data)=>{
+              console.log('================type 1-2====================');
+              console.log(data.data);
+              console.log('====================================');
+              setLogs(data.data);
+          })
+            .catch(()=>{})   
+          }
+          else if ((startDate !== '') && ( endDate !== '')){
+            axios.get(`http://localhost:5000/api/imprime/impressionsByStartEndDate/${startDate}/${endDate}`)
+            .then((data)=>{
+              console.log('================type 1-3====================');
+              console.log(data.data);
+              console.log('====================================');
+              setLogs(data.data);
+          })
+            .catch(()=>{})  
+          }
+          } 
+    else if(filtretype !== "all")  {
+    if ((startDate === '') && (endDate === '')){
+     
+      axios.get(` http://localhost:5000/api/imprime/impressionsByIMP/${filtretype}`)
+      .then((data)=>{
+       console.log('================type 2-1====================');
+       console.log(data.data);
+       console.log('====================================');
+     setLogs(data.data);
+   })
+      .catch(()=>{})   
+   }
+    else if((startDate !== '') && (endDate === '')){
+      axios.get(`http://localhost:5000/api/imprime/impressionsByImp&StartDate/${filtretype}/${startDate}`)
+      .then((data)=>{
+       console.log('================type 2-1====================');
+       console.log(data.data);
+       console.log('====================================');
+     setLogs(data.data);
+   })
+      .catch(()=>{})   
+   }
+  }
+    
 }
+
+
+
   const getAllprinterName = () => {
   axios.get(`http://localhost:5000/api/printer/getAllPrinterName`)
   .then((data)=>{
@@ -56,9 +105,6 @@ function Home() {
   })
   .catch(()=>{})   
 }
-
-
-
 
   // const handleSubmit = async () => {    
     
@@ -96,42 +142,33 @@ function Home() {
       setEndDate(newStartDate);
     }
   };
-
-
-    
-
-  return (
-
-//   
+  return (  
 <>
 
 
 {/* <!-- Page Content --> */}
-
-
-<nav class="navbar " style={{backgroundColor:"#020495"}}>
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img src={logo} alt="" class="d-inline-block align-text-top"/>      
+<nav className="navbar " style={{backgroundColor:"#020495"}}>
+  <div className="container-fluid">
+    <a className="navbar-brand" href="#">
+      <img src={logo} alt="" className="d-inline-block align-text-top"/>      
     </a>
   <span className="navbar-text text-white d-flex">
           {formattedTime}
         </span>
   </div>
 </nav>
-<div class="container-fluid">
+<div className="container-fluid">
 
 
 
 
-<div className=""> 
- <br />
- <br />
- <br />
+<div className="container"> 
+ <br/>
+ <br/>
+ <br/>
 
 
-  <div className="filter-section">
-   
+  <div className="filter-section">   
     
     <div className="row">
       <div className="col-md-4">
@@ -169,7 +206,7 @@ function Home() {
       </div>
      <div className="col-md-4">
      <button  onClick={()=>{
-      handleFiltre(filtretype,filtreName)
+      handleFiltre(filtretype,startDate,endDate)
      }} className="custom-btn btn-3" >
         
         <span>filtre</span>

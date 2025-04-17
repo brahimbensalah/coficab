@@ -1,67 +1,63 @@
-const ftp = require("basic-ftp"); // Ensure you have installed basic-ftp
+const ftp = require("basic-ftp");
 const fs = require("fs");
 const path = require("path");
+const { Printer } = require("./Models"); // <- adjust if your Printer model is elsewhere
 
-// FTP Credentials
-const FTP_HOST = "172.20.200.42";
-const FTP_USER = "admin";
-const FTP_PASS = "admin";
-const p = FTP_HOST.lastIndexOf('.');
-//get the last 2 char
-const NameImp = 'imp'+ FTP_HOST.substring(p + 1);
-
-// Local directory to store files
-// 📂 Dossier des fichiers téléchargés
 const uploadDirectory = path.join(__dirname, "uploads");
-// const LOCAL_DIR = "C:/photocopiecofat/photocopie40/imp40";
 
-// Function to download file
-async function downloadFile() {
-    const client = new ftp.Client();
-    client.ftp.verbose = true;
+// 📁 Ensure local directory exists
+if (!fs.existsSync(uploadDirectory)) {
+    fs.mkdirSync(uploadDirectory, { recursive: true });
+}
 
+// 🔁 Function to download from all printers
+async function downloadFromAllPrinters() {
     try {
-        console.log("📡 Connecting to FTP server...");
-        await client.access({
-            host: FTP_HOST,
-            user: FTP_USER,
-            password: FTP_PASS,
-            secure: false,
-        });
+        const printers = await Printer.findAll(); // Get all printer IPs from DB
+      
 
-       
+        for (const printer of printers) {
+            const host = printer.dataValues.ip_adress; // <- Adjust field name as needed
+            const client = new ftp.Client();
+            client.ftp.verbose = true;
 
-        const remoteFile = "prnlog"; // Adjust this if needed
-        const localFile = path.join(uploadDirectory, generateFileName());
+            const ipSuffix = host.split(".").pop(); // e.g. "166" → "imp166"
+            const namePrefix = `imp${ipSuffix}`;
 
-        console.log(`📂 Downloading ${remoteFile} to ${localFile}...`);
-        await client.downloadTo(localFile, remoteFile);
-        // console.log("✅ File downloaded successfully");
-        // console.log("✅ Connected to FTP");
-        // console.log('=================ftp===================');
-        // console.log(ftp);
-        // console.log('====================================');
+            const localFileName = `${namePrefix}_${generateTimestamp()}.txt`;
+            const localFilePath = path.join(uploadDirectory, localFileName);
 
-        // ftp.list((err, list) => {
-        //     if (err) {
-        //         console.error("Erreur lors de la récupération de la liste des fichiers :", err);
-        //     } else {
-        //         console.log("📂 Fichiers disponibles sur le FTP :", list.map(f => f.name));
-        //     }
-        // });
+            try {
+                console.log(`🔌 Connecting to printer FTP: ${host}...`);
+                await client.access({
+                    host,
+                    user: "admin",
+                    password: "admin",
+                    secure: false,
+                });
 
+                console.log(`📥 Downloading prnlog from ${host}...`);
+                await client.downloadTo(localFilePath, "prnlog");
+                console.log(`✅ Downloaded from ${host} as ${localFileName}`);
+            } catch (err) {
+                console.error(`❌ Failed to download from ${host}:`, err.message);
+            } finally {
+                client.close();
+            }
+        }
     } catch (err) {
-        console.error("❌ FTP Download Error:", err);
-    } finally {
-        client.close();
+        console.error("❌ Error fetching printers from DB:", err.message);
     }
 }
 
-// Helper function to generate filename
-function generateFileName() {
-    const date = new Date();
-    return  NameImp+`${date.toDateString().replace(/\s+/g, "")}${date.getHours()}${date.getMinutes()}${date.getSeconds()}.txt`;
+// 🕒 Timestamp generator
+function generateTimestamp() {
+    const d = new Date();
+    return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
 }
 
-// ✅ Export function correctly
-module.exports = { downloadFile };
+function pad(n) {
+    return n.toString().padStart(2, '0');
+}
+
+module.exports = { downloadFromAllPrinters };

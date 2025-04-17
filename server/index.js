@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const imprimeRoutes = require("./routes/imprime.routes");
 const printRoutes = require("./routes/printer.routes");
 const { downloadFile } = require("./ftpDownload"); // 🔹 Importation du script FTP
+const { downloadFromAllPrinters } = require("./ftpDownload");
+
 
 const { processNewFiles } = require("./processFiles"); // 🔹 Importation du script de traitement
 
@@ -24,15 +26,15 @@ app.use("/api/printer", printRoutes);
 // 🚀 **Lancer le FTP et le traitement avant de démarrer le serveur**
 async function startServer() {
     console.log("📡 Téléchargement des fichiers depuis le serveur FTP...");
-    await downloadFile(); // Corrected to downloadAllFiles
+    await downloadFromAllPrinters();// Corrected to downloadAllFiles
 
     console.log("📂 Traitement des nouveaux fichiers...");
     processNewFiles();
 
     // 🔄 Vérification automatique toutes les 5 minutes
     setInterval(() => {
-      console.log("📡 Téléchargement des fichiers depuis le serveur FTP...");
-      downloadFile(); // Corrected to downloadAllFiles
+        console.log("📡 Running periodic download...");
+        downloadFromAllPrinters();
         console.log("🔍 Vérification des nouveaux fichiers...");
         processNewFiles();
         

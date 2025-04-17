@@ -20,9 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      Date: {
-        // type: DataTypes.STRING,
-        // allowNull: false, 
+      Date: { 
         type: DataTypes.DATEONLY, // 📌 Stocke uniquement la date (AAAA-MM-JJ)
         allowNull: false,
       },
