@@ -9,18 +9,20 @@ function Home() {
   const [file, setFile] = useState(null);
   const [filtretype, setType] = useState("all");
   const [filtreName, setName] = useState("");
-
-
   //for filter date
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-
   //navbarre date
   const [currentTime, setCurrentTime] = useState(new Date());
   const formattedTime = currentTime.toLocaleString(); // e.g. "4/8/2025, 10:15:30 AM"
 
+
+
+  const [resultatImp,setresultatImp]= useState("")
+  const [resultatNBPage,setresultatNBPage]= useState()
+
   
-  useEffect(()=>{
+  useEffect(()=>{ 
     fetchhistorie();
     getAllprinterName();
     const timer = setInterval(() => {
@@ -42,30 +44,28 @@ function Home() {
 
             axios.get(`http://localhost:5000/api/imprime/impressions`)
             .then((data)=>{
-              console.log('================type 1-1====================');
-              console.log(data.data);
-              console.log('====================================');
               setLogs(data.data);
+              setresultatImp(data.data.length)
+              setresultatNBPage(data.data.reduce((sum, log) => sum + (log.Page || 0), 0))
+
             })
             .catch(()=>{})   
           }
           else if ((startDate !== '') && ( endDate === '')){
             axios.get(`http://localhost:5000/api/imprime/impressionsByStartDate/${startDate}`)
             .then((data)=>{
-              console.log('================type 1-2====================');
-              console.log(data.data);
-              console.log('====================================');
               setLogs(data.data);
+              setresultatImp(data.data.length)
+              setresultatNBPage(logs.reduce((sum, log) => sum + (log.Page || 0), 0))
           })
             .catch(()=>{})   
           }
           else if ((startDate !== '') && ( endDate !== '')){
             axios.get(`http://localhost:5000/api/imprime/impressionsByStartEndDate/${startDate}/${endDate}`)
             .then((data)=>{
-              console.log('================type 1-3====================');
-              console.log(data.data);
-              console.log('====================================');
               setLogs(data.data);
+              setresultatImp(data.data.length)
+              setresultatNBPage(data.data.reduce((sum, log) => sum + (log.Page || 0), 0))
           })
             .catch(()=>{})  
           }
@@ -79,6 +79,8 @@ function Home() {
        console.log(data.data);
        console.log('====================================');
      setLogs(data.data);
+     setresultatImp(data.data.length)
+     setresultatNBPage(data.data.reduce((sum, log) => sum + (log.Page || 0), 0))
    })
       .catch(()=>{})   
    }
@@ -89,19 +91,33 @@ function Home() {
        console.log(data.data);
        console.log('====================================');
      setLogs(data.data);
+     setresultatImp(data.data.length)
+     setresultatNBPage(data.data.reduce((sum, log) => sum + (log.Page || 0), 0))
    })
       .catch(()=>{})   
    }
+   else if((startDate !== '') && (endDate !== '')){
+    axios.get(`http://localhost:5000/api/imprime/impressionsByImp&StartEndDate/${filtretype}/${startDate}/${endDate}`)
+    .then((data)=>{
+     console.log('================type 2-3====================');
+     console.log(data.data);
+     console.log('====================================');
+   setLogs(data.data);
+   setresultatImp(data.data.length)
+   setresultatNBPage(data.data.reduce((sum, log) => sum + (log.Page || 0), 0))
+ })
+    .catch(()=>{})   
+ }
   }
     
 }
 
-
-
   const getAllprinterName = () => {
   axios.get(`http://localhost:5000/api/printer/getAllPrinterName`)
   .then((data)=>{
-    setprinterName(data.data);  
+    setprinterName(data.data);
+    setresultatImp(data.data.length)
+    setresultatNBPage(data.data.reduce((sum, log) => sum + (log.Page || 0), 0))  
   })
   .catch(()=>{})   
 }
@@ -219,14 +235,45 @@ function Home() {
   <br />
   <br />
   <br />
+    
 
   <table className="table table-bordered">
     <thead>
     <tr>
-                <th className="col-2">ID</th>
+                {/* <th className="col-2">ID</th> */}
+                
                 <th className="col-2">NameImp</th>
+                
+               
+                <th className="col-2">NB PAGE</th>
+               
+             
+            </tr>
+    </thead>
+    <tbody>
+      
+    
+            <tr>
+                {/* <td  >{log.id}</td> */}
+                <td  >{resultatImp}</td>
+                <td  >{resultatNBPage}</td>
+              
+              </tr>
+          
+ 
+    </tbody>
+  </table>
+
+
+  <table className="table table-bordered">
+    <thead>
+    <tr>
+                {/* <th className="col-2">ID</th> */}
+                <th className="col-1">ID</th>
+                <th className="col-2">NameImp</th>
+                <th className="col-1">UID</th>
                 <th className="col-2">USER</th>
-                <th className="col-2">PAGE</th>
+                <th className="col-1">PAGE</th>
                 <th className="col-2">Result</th>
                 <th className="col-2">DATE</th>
                 <th className="col-2">TIME</th>
@@ -236,8 +283,10 @@ function Home() {
       
       {logs.map((log) => (
             <tr key={log.id}>
+                {/* <td  >{log.id}</td> */}
                 <td  >{log.id}</td>
                 <td  >{log.NameImp}</td>
+                <td  >{log.UID}</td>
                 <td >{log.User}</td>
                 <td >{log.Page}</td>
                 <td >{log.Result}</td>

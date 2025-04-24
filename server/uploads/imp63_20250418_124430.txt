@@ -1,0 +1,23 @@
+ ID          User      Page  Result      Time           
+--------------------------------------------------------
+ 14          hhamroun     1  Finished    25/04/18 11:42
+ 15          rchamakh     1  Finished    25/04/18 11:42
+ 16          rchamakh     1  Finished    25/04/18 11:43
+ 17          hhamroun     1  Finished    25/04/18 11:45
+ 18          rchamakh     1  Finished    25/04/18 11:52
+ 19          rchamakh     1  Finished    25/04/18 11:52
+ 20          hhamroun     1  Finished    25/04/18 11:55
+ 21          hhamroun     1  Finished    25/04/18 12:06
+ 22          hhamroun     1  Finished    25/04/18 12:07
+ 23          hhamroun     1  Finished    25/04/18 12:12
+ 24          hhamroun     2  Finished    25/04/18 12:27
+ 25          hhamroun     2  Finished    25/04/18 12:28
+ 26          hhamroun     2  Finished    25/04/18 12:31
+ 27          hhamroun     2  Finished    25/04/18 12:32
+ 28          hhamroun     2  Finished    25/04/18 12:32
+ 29          hhamroun     2  Finished    25/04/18 12:33
+ 30          hhamroun     8  Finished    25/04/18 12:34
+ 31          hhamroun     6  Finished    25/04/18 12:34
+ 32          hhamroun     2  Finished    25/04/18 12:35
+ 33          hhamroun     2  Finished    25/04/18 12:35
+

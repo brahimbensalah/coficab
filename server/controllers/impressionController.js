@@ -67,6 +67,32 @@ module.exports = {
       });
     }
   },
+  getAllImpressionsByImp_StartEndDate: async function (req, res) {
+    try {
+      const nameImp = req.params.nameImp;
+      const startdate = req.params.startDate;
+      const endDate = req.params.endDate;
+  
+      console.log("🔍 Recherche :", { nameImp, startdate, endDate });
+  
+      const impressions = await Impression.findAll({
+        where: {
+          Date: {
+            [Op.between]: [startdate, endDate],
+          },
+          NameImp: nameImp,
+        },
+      });
+  
+      res.status(200).json(impressions);
+    } catch (error) {
+      console.error("❌ Erreur:", error);
+      res.status(500).json({
+        message: "Erreur lors de la récupération.",
+        error,
+      });
+    }
+  },
   getAllImpressionsByStartEndDate: async function (req, res) {
     try {
       const { startDate, endDate } = req.params; // 🟡 On suppose que tu les envoies dans l’URL comme query params

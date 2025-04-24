@@ -4,6 +4,10 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
     const Impression = sequelize.define('Impression', {
+      UID: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       NameImp: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -31,9 +35,15 @@ module.exports = (sequelize, DataTypes) => {
      
     }, 
     {
-      tableName: 'Impression',
-      timestamps: false
-    });
+      indexes: [
+        {
+          unique: true,
+          name: "unique_print_entry",
+          fields: ["UID", "NameImp", "User", "Page", "Date", "Time"]
+        }
+      ] 
+    }
+   );
   
     return Impression;
   };

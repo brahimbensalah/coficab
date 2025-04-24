@@ -22,6 +22,7 @@ router.get("/impressionsByImp/:nameImp", impressionController.getAllImpressionsB
 router.get("/impressionsByStartDate/:date", impressionController.getAllImpressionsByStartDate);
 router.get("/impressionsByStartEndDate/:startDate/:endDate", impressionController.getAllImpressionsByStartEndDate);
 router.get("/impressionsByImp&StartDate/:nameImp/:startDate", impressionController.getAllImpressionsByImp_StartDate);
+router.get("/impressionsByImp&StartEndDate/:nameImp/:startDate/:endDate", impressionController.getAllImpressionsByImp_StartEndDate);
 router.get("/impressionsByUser/:user", impressionController.getAllImpressionsByUser);
 // router.post("/upload", upload.single("file"), impressionController.uploadFile);
 // router.get("/impressions/filter", impressionController.filterImpressions);

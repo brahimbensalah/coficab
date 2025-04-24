@@ -5,21 +5,19 @@ const imprimeRoutes = require("./routes/imprime.routes");
 const printRoutes = require("./routes/printer.routes");
 const { downloadFile } = require("./ftpDownload"); // 🔹 Importation du script FTP
 const { downloadFromAllPrinters } = require("./ftpDownload");
-
-
 const { processNewFiles } = require("./processFiles"); // 🔹 Importation du script de traitement
-
 require("./Models/index");
-
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+
+
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("uploads"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/../client/dist"));
-
 app.use("/api/imprime", imprimeRoutes);
 app.use("/api/printer", printRoutes);
 

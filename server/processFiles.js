@@ -15,7 +15,6 @@ if (!fs.existsSync(cumulativeDir)) {
     fs.mkdirSync(cumulativeDir);
   }
 
-
 function getNewFiles() {
     const files = fs.readdirSync(uploadDirectory).map(file => ({
       name: file,
@@ -39,9 +38,7 @@ function processNewFiles() {
     newFiles.forEach(file => {
         const filePath = path.join(uploadDirectory, file);
         console.log(`📄 Traitement du fichier : ${filePath}`);
-        const fileExtension = path.extname(file);
-        // const match = file.match(/[A-Z][a-z]{2}/); // e.g. 'Wed'
-        // const index = match ? file.indexOf(match[0]) : -1;        
+        const fileExtension = path.extname(file);       
         const printerName = file.split("_")[0]; // ✅ returns 'imp166'
 
         if (fileExtension === ".csv") {
@@ -55,7 +52,6 @@ function processNewFiles() {
         }
     });
 }
-
 
 const getprinterid = async (printerName) => {
   console.log("📡 [getprinterid] Reçu printerName:", printerName);
@@ -162,13 +158,7 @@ function parseTXT(filePath, printerName) {
 
     const printerData = await getprinterid(printerName); // ✅ Now valid!
     const printerId = printerData ? parseInt(printerData.id) : null;
-  
-   
-    // const printerId =parseInt( printerName?.slice(3));   
-      // const printerId = parseInt(printerName[4]);
-
-      
-        const lines = data.trim().split("\n"); // Split lines
+    const lines = data.trim().split("\n"); // Split lines
 
       lines.forEach((line) => {
         if (line.startsWith("ID") || line.startsWith("---") || line.trim() === "") {
@@ -177,9 +167,11 @@ function parseTXT(filePath, printerName) {
       }
       
           const parts = line.trim().split(/\s+/);
+      
 
           if (parts.length >= 6) { 
               // 🟢 Identifier les indices des colonnes
+              const uid = parseInt(parts[0]); // ➕ Ajout du champ UID
               const lastIndex = parts.length - 1;
               const time = parts[lastIndex]; // Dernière colonne = Heure
               const date = parts[lastIndex - 1]; // Avant-dernière colonne = Date
@@ -194,6 +186,7 @@ function parseTXT(filePath, printerName) {
               const formattedDate = new Date(`20${date.split("/")[0]}-${date.split("/")[1]}-${date.split("/")[2]}`);
 
               results.push({
+                  UID: uid, // 🔥 Stockage de l'UID
                   NameImp: printerName,
                   User: user,
                   Page: page,
@@ -216,7 +209,7 @@ function updateCumulativeFile(printerName, data) {
   
    // Convertir les données en format texte
     const fileData = data.map(row => 
-      `${row.User} ${row.Page} ${row.Result} ${row.Date.toISOString().split("T")[0]} ${row.Time}`
+      `${row.UID} ${row.User} ${row.Page} ${row.Result} ${row.Date.toISOString().split("T")[0]} ${row.Time}`
     ).join("\n");
   
     // Ajouter les nouvelles données au fichier cumulé
@@ -225,6 +218,7 @@ function updateCumulativeFile(printerName, data) {
       else console.log(`✅ Fichier cumulé mis à jour : ${cumulativeFilePath}`);
     });
   }
+
 //  Fonction pour enregistrer les données en base MySQL avec Sequelize
 // async function saveToDatabase(data,printerName,originalFilePath) {
 //     try {
@@ -244,11 +238,13 @@ function updateCumulativeFile(printerName, data) {
 //       console.error("❌ Erreur insertion BDD :", error);
 //     }
 //   }
+
 async function saveToDatabase(data, printerName, originalFilePath) {
   try {
       for (const entry of data) {
           const exists = await Impression.findOne({
               where: {
+                  UID: entry.UID,
                   NameImp: entry.NameImp,
                   User: entry.User,
                   Page: entry.Page,
