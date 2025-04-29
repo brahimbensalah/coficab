@@ -1,0 +1,23 @@
+body[data-theme="light"] {
+    --bg: #ffffff;
+    --text: #000000;
+    --card: #f8f9fa;
+  }
+  
+  body[data-theme="dark"] {
+    --bg: #1e1e2f;
+    --text: #f1f1f1;
+    --card: #2d2d3a;
+  }
+  
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .card {
+    background-color: var(--card);
+    color: var(--text);
+  }
+  
