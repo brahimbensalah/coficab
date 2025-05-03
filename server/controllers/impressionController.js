@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const db = require("../Models/index.js");
 const Impression = db.Impression;
-const { Op } = require("sequelize");
+const { Op,fn, col, where  } = require("sequelize");
 
 
 
@@ -126,5 +126,26 @@ module.exports = {
       res.status(500).json({ message: "Erreur lors de la récupération.", error });
     }
   },
+  // GET /impressionsByMonth/:month (ex: '2025-05')
+getMonthlyImpressions: async (req, res) => {
+  const { month } = req.params; // Format attendu: YYYY-MM
+  try {
+    const impressions = await Impression.findAll({
+      where: where(fn('DATE_FORMAT', col('Date'), '%Y-%m'), month),
+      attributes: [
+        'NameImp',
+        [fn('DAY', col('Date')), 'day'],
+        [fn('COUNT', col('UID')), 'count']
+      ],
+      group: ['NameImp', fn('DAY', col('Date'))],
+      raw: true
+    });
+
+    res.json({ data: impressions });
+  } catch (error) {
+    console.error('Erreur lors de la récupération des impressions mensuelles :', error);
+    res.status(500).json({ error: 'Erreur serveur.' });
+  }
+},
 };
 

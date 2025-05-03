@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import '../CSS/Home.css';
-import Dashboard from './Dashboard.js';
+import Statistique from '../components/statistique.js' 
+import MonthlyHeatmap from '../components/MonthlyHeatmap.js'
+
 import SmartAnalytics from '../components/SmartAnalytics.js';
 
 import logo from '../Images/logo.png'
@@ -247,9 +249,16 @@ const handleStartChange = (e) => {
 </div>
   <br />
   <br />
+
+  <MonthlyHeatmap />
+
+
+  <br />
+  <br />
   <SmartAnalytics logs={logs} />
 
- <Dashboard logs={logs} />
+ <Statistique logs={logs} />
+
 
   <br />
     

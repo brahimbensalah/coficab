@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import '../CSS/Dashbord.css'
+import EvolutionChart from './EvolutionChart.js';
+import PrinterDistribution from './PrinterDistribution.js'
+import TopUsersChart  from './TopUsersChart.js'
+import PeakHoursChart  from './PeakHoursChart.js'
+
 
 function Dashboard({ logs }) {
   const [weeklyStats, setWeeklyStats] = useState([]);
@@ -120,18 +125,23 @@ function Dashboard({ logs }) {
   }
   return (
     <>
+
           <h2 className="">📊 Tableau de bord des impressions</h2>
 
-    <div className=" container-fluid dashboard-container">
-        <div className="chart-card">
-      <Bar data={chartData} options={options} />
-    </div>
+    <div className="container-fluid dashboard-container">
+      <div className='row'> 
+
+
+
+        <div className="col-12 chart-card  ">
+             <Bar data={chartData} options={options} />
+        </div>
   
 
-    
-
+    <br/>
+      
       {/* Weekly Activity */}
-      <div className="chart-card">
+      <div className="col-md-6 chart-card">
         <h5>Statistiques Hebdomadaires</h5>
         <Bar
           data={{
@@ -148,7 +158,7 @@ function Dashboard({ logs }) {
      
 
       {/* Total Pages */}
-      <div className="chart-card">
+      <div className="col-md-6 chart-card">
         <h5>Consommation de papier estimée</h5>
         <p>
           📄 <strong>{totalPages}</strong> pages imprimées
@@ -167,9 +177,36 @@ function Dashboard({ logs }) {
           ))}
         </ul>
       </div>
+      <div className="dashboard-container">
+      <div className="chart-card ">
+        <h3>📈 Évolution des impressions</h3>
+        <EvolutionChart logs={logs} />
+      </div>
+
+      <div className="chart-card">
+        <h3> Utilisation par imprimante</h3>
+        <PrinterDistribution logs={logs} />
+      </div>
+
+      <div className="chart-card">
+        <h3>🏆 Top 5 utilisateurs</h3>
+        <TopUsersChart logs={logs} />
+      </div>
+
+      <div className="chart-card">
+        <h3>⏰ Heures de pic</h3>
+        <PeakHoursChart logs={logs} />
+      </div>
+      
+    </div>
+
 
       
     </div>
+
+
+    </div>
+
     </>
   );
 }

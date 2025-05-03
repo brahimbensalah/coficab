@@ -17,11 +17,12 @@ function PeakHoursChart({logs}) {
         datasets: [{
           label: 'Impressions par heure',
           data,
-          backgroundColor: '#FF9F40'
+          backgroundColor: '#FF9F40',
+          
         }]
       };
   return (
-    <div>
+    <div style={{width:"600px",height:"350px"}}>
         <Bar data={chartData} />
 
       

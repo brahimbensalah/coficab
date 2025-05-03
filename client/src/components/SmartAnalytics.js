@@ -1,4 +1,8 @@
 import React from "react";
+import EstimationCout from "./EstimationCout";
+import SmartAlerts from "./SmartAlerts";
+
+
 
 const SmartAnalytics = ({ logs }) => {
   const calculerMoyennePages = () => {
@@ -47,6 +51,14 @@ const SmartAnalytics = ({ logs }) => {
           ) : (
             <span className="text-success">Aucune</span>
           )}
+        </li>
+        <li className="list-group-item">
+        <SmartAlerts logs={logs} />
+
+        </li>
+        <li className="list-group-item">
+        <EstimationCout logs={logs} />
+
         </li>
       </ul>
     </div>

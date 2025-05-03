@@ -29,7 +29,7 @@ function TopUsersChart({logs}) {
           indexAxis: 'y',
         };
   return (
-    <div>
+    <div style={{width:"600px",height:"350px"}}>
         <Bar data={chartData} options={options} />
       
     </div>
