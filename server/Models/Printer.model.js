@@ -1,7 +1,4 @@
 const { Sequelize, DataTypes } = require('sequelize');
-
-
-
 module.exports = (sequelize, DataTypes) => {
     const Printer = sequelize.define('Printer', {
       printerId:{

@@ -24,14 +24,21 @@ async function connectionTest (){
 
   db.Printer = require('./Printer.model.js')(connection,DataTypes) 
   db.Impression = require('./impressions.model.js')(connection,DataTypes) 
+  // db.User = require('./User.model.js')(connection,DataTypes) 
 
-  db.Printer.hasMany(db.Impression
-  //   ,{
-  //   foreignKey:"printerId"
-  // }
-)
+  db.Printer.hasMany(db.Impression)
   db.Impression.belongsTo(db.Printer)
 
+
+  // db.User.hasMany(db.Impression, {
+  //   foreignKey: "userId",
+  //   as: "impressions",
+  // });
+
+  // db.Impression.belongsTo(db.User, {
+  //   foreignKey: "userId",
+  //   as: "user",
+  // });
 //  connection.sync({force:true}) 
 //  db.Impression.sync({force:true}) 
 

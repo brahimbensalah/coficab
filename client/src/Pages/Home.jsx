@@ -141,18 +141,18 @@ const handleStartChange = (e) => {
 
 
 {/* <!-- Page Content --> */}
-<nav className="navbar " style={{backgroundColor:"#020495"}}>
-  <div className="container">
+<nav className="navbar " >
+  <div className="container-fluid">
     <a className="navbar-brand" href="">
       <img src={logo} alt="" className="d-inline-block align-text-top"/>      
     </a>
-  <span className="navbar-text text-white d-flex">
+  <span className="navbar-text text-white d-flex" style={{backgroundColor:"#020495"}}>
           {formattedTime}
         </span>
   </div>
 </nav>
 <div className="container-fluid">
-<div className="container"> 
+<div className="container-fluid"> 
  <br/> <br/> <br/>
  <div className="filter-section">
  <div className="text-end mb-2">
@@ -165,9 +165,9 @@ const handleStartChange = (e) => {
   </button>
 </div>
  {/* backend doit supporter cette route  GET /api/imprime/impressionsAdvanced?printer=X&startDate=YYYY-MM-DD&endDate=YYYY-MM-DD&user=abc&startHour=08:00&endHour=17:00 */}
-  <button className="btn btn-link" onClick={() => setShowAdvanced(!showAdvanced)}>
+  {/* <button className="btn btn-link" onClick={() => setShowAdvanced(!showAdvanced)}>
     {showAdvanced ? "Masquer les filtres avancés ▲" : "Afficher les filtres avancés ▼"}
-  </button>
+  </button> */}
 </div>
 
 {showAdvanced && (
@@ -252,8 +252,9 @@ const handleStartChange = (e) => {
 
   <MonthlyHeatmap />
 
-
-  <br />
+<div className="container">
+  
+<br />
   <br />
   <SmartAnalytics logs={logs} />
 
@@ -263,32 +264,7 @@ const handleStartChange = (e) => {
   <br />
     
 
-  {/* <table className="table table-bordered">
-    <thead>
-    <tr>
-              
-                
-                <th className="col-2">NameImp</th>
-                
-               
-                <th className="col-2">NB PAGE</th>
-               
-             
-            </tr>
-    </thead>
-    <tbody>
-      
-    
-            <tr>
-               
-                <td  >{resultatImp}</td>
-                <td  >{resultatNBPage}</td>
-              
-              </tr>
-          
- 
-    </tbody>
-  </table> */}
+  
 
 
   <table className="table table-bordered">
@@ -323,6 +299,7 @@ const handleStartChange = (e) => {
  
     </tbody>
   </table>
+</div>
 </div>
 
 </div>

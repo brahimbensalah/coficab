@@ -10,7 +10,6 @@ const MonthlyHeatmap = () => {
   const [month, setMonth] = useState(format(new Date(), 'yyyy-MM'));
   const [data, setData] = useState([]);
   const [imprimantes, setImprimantes] = useState([]);
-  const [daysInMonth, setDaysInMonth] = useState(31);
 
   useEffect(() => {
     fetchData();
@@ -31,10 +30,6 @@ const MonthlyHeatmap = () => {
 
       setData(grouped);
       setImprimantes(uniqueImprimantes);
-
-      const [year, m] = month.split('-');
-      const lastDay = new Date(year, m, 0).getDate();
-      setDaysInMonth(lastDay);
     } catch (error) {
       console.error('Erreur de récupération des données', error);
     }
@@ -42,21 +37,13 @@ const MonthlyHeatmap = () => {
 
   const getColor = (count) => {
     if (!count) return '#f0f0f0';
-  
-    // Définis une valeur maximale attendue (ajuste selon ton dataset)
-    const max = 200;
-  
-    // Clamp entre 0 et 1
+    const max = 200; // valeur max attendue (à ajuster)
     const ratio = Math.min(count / max, 1);
-  
-    // Interpolation RVB entre vert (#00FF00) → rouge (#FF0000)
     const r = Math.round(255 * ratio);
     const g = Math.round(255 * (1 - ratio));
     const b = 0;
-  
     return `rgb(${r},${g},${b})`;
   };
-  
 
   const exportToPNG = async () => {
     const element = document.getElementById('heatmap');
@@ -96,13 +83,17 @@ const MonthlyHeatmap = () => {
       <div id="heatmap" className="heatmap-container">
         <div className="heatmap-grid">
           <div className="sticky-col header"></div>
-          {[...Array(daysInMonth)].map((_, i) => (
+
+          {/* Jours de 1 à 31 (fixes) */}
+          {[...Array(31)].map((_, i) => (
             <div key={`day-header-${i}`} className="header">{i + 1}</div>
           ))}
+
+          {/* Lignes imprimantes */}
           {imprimantes.map(imp => (
             <React.Fragment key={imp}>
               <div className="sticky-col">{imp}</div>
-              {[...Array(daysInMonth)].map((_, i) => {
+              {[...Array(31)].map((_, i) => {
                 const day = i + 1;
                 const count = data[imp]?.[day] || 0;
                 const color = getColor(count);

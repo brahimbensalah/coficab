@@ -13,6 +13,8 @@ const PORT = process.env.PORT || 5000;
 
 
 
+
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("uploads"));
@@ -36,12 +38,19 @@ async function startServer() {
         console.log("🔍 Vérification des nouveaux fichiers...");
         processNewFiles();
         
-    }, 1 * 60 * 1000);
+    }, 10 * 60 * 1000);
+
+
+
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
+});
 
     // 🏁 Démarrer le serveur après le FTP et le traitement
-    app.listen(PORT, () => {
-        console.log(`✅ Serveur Express en cours d'exécution sur http://localhost:${PORT}`);
-    });
+    // app.listen(PORT, () => {
+    //     console.log(`✅ Serveur Express en cours d'exécution sur http://localhost:${PORT}`);
+    // });
 }
 
 // 🔥 Exécuter le serveur
