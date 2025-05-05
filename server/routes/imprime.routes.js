@@ -19,6 +19,11 @@ const storage = multer.diskStorage({
 
 router.get("/impressions", impressionController.getAllImpressions);
 router.get("/impressionsByImp/:nameImp", impressionController.getAllImpressionsByNameImp);
+router.get('/impressionsByMonth/:month', impressionController.getMonthlyImpressions);
+router.get("/impressionsByStartDate/:date", impressionController.getAllImpressionsByStartDate);
+router.get("/impressionsByStartEndDate/:startDate/:endDate", impressionController.getAllImpressionsByStartEndDate);
+router.get("/impressionsByImp&StartDate/:nameImp/:startDate", impressionController.getAllImpressionsByImp_StartDate);
+router.get("/impressionsByImp&StartEndDate/:nameImp/:startDate/:endDate", impressionController.getAllImpressionsByImp_StartEndDate);
 router.get("/impressionsByUser/:user", impressionController.getAllImpressionsByUser);
 // router.post("/upload", upload.single("file"), impressionController.uploadFile);
 // router.get("/impressions/filter", impressionController.filterImpressions);

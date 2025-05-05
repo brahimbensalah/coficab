@@ -4,7 +4,8 @@ const csvParser = require("csv-parser");
 const xlsx = require("xlsx");
 const db = require("./Models/index.js"); // Assure-toi que c'est bien le fichier principal
 const Impression = db.Impression ;
-
+// import axios from "axios";
+const axios = require('axios')
 // 📂 Dossier des fichiers téléchargés
 const uploadDirectory = path.join(__dirname, "uploads");
  // Dossier des fichiers cumulés
@@ -14,8 +15,7 @@ if (!fs.existsSync(cumulativeDir)) {
     fs.mkdirSync(cumulativeDir);
   }
 
-
-  function getNewFiles() {
+function getNewFiles() {
     const files = fs.readdirSync(uploadDirectory).map(file => ({
       name: file,
       time: fs.statSync(path.join(uploadDirectory, file)).mtime.getTime()
@@ -38,8 +38,8 @@ function processNewFiles() {
     newFiles.forEach(file => {
         const filePath = path.join(uploadDirectory, file);
         console.log(`📄 Traitement du fichier : ${filePath}`);
-        const fileExtension = path.extname(file);
-        const printerName = file.substring(0, 5);
+        const fileExtension = path.extname(file);       
+        const printerName = file.split("_")[0]; // ✅ returns 'imp166'
 
         if (fileExtension === ".csv") {
             parseCSV(filePath, printerName);
@@ -53,6 +53,31 @@ function processNewFiles() {
     });
 }
 
+const getprinterid = async (printerName) => {
+  console.log("📡 [getprinterid] Reçu printerName:", printerName);
+
+  if (!printerName) {
+    console.warn("⚠️ [getprinterid] printerName est vide ou invalide !");
+    return null;
+  }
+
+  const url = `http://localhost:5000/api/printer/getPrinterId/${printerName}`;
+  console.log("🌐 [getprinterid] URL appelée:", url);
+
+  try {
+    const response = await axios.get(url);
+    console.log("✅ [getprinterid] Réponse reçue:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("❌ [getprinterid] Erreur Axios:", {
+      message: error.message,
+      status: error?.response?.status,
+      data: error?.response?.data,
+    });
+    return null;
+  }
+};
+
 // 📝 Fonction pour parser un fichier CSV
 function parseCSV(filePath,printerName) {
   const results = []; 
@@ -62,11 +87,16 @@ function parseCSV(filePath,printerName) {
       console.error("Error reading file:", err);
       return res.status(500).send("Error reading file");
     }
-    const id= parseInt(printerName[4]) ; 
+
+
+    // const id= parseInt(getprinterid(printerName).printerId) ; 
+
+
     console.log('==============id======================');
     console.log(id);
     console.log('====================================');   
-   
+    
+
     const lines = data.trim().split("\n"); // Split lines
 
     for (const line of lines) {
@@ -90,7 +120,6 @@ function parseCSV(filePath,printerName) {
     saveToDatabase(results, printerName, filePath);
   });
 }
-
 
 // 📝 Fonction pour parser un fichier Excel
 function parseExcel(filePath, printerName) {
@@ -121,20 +150,28 @@ function parseExcel(filePath, printerName) {
 function parseTXT(filePath, printerName) {
   const results = [];
 
-  fs.readFile(filePath, "utf8", (err, data) => {
-      if (err) {
-          console.error("Erreur de lecture du fichier:", err);
-          return;
-      }
+  fs.readFile(filePath, "utf8", async (err, data) => {
+    if (err) {
+      console.error("Erreur de lecture du fichier:", err);
+      return;
+    }
 
-      const lines = data.split("\n").slice(2); // Ignorer l'en-tête
-      const printerId = parseInt(printerName[4]);
+    const printerData = await getprinterid(printerName); // ✅ Now valid!
+    const printerId = printerData ? parseInt(printerData.id) : null;
+    const lines = data.trim().split("\n"); // Split lines
 
       lines.forEach((line) => {
+        if (line.startsWith("ID") || line.startsWith("---") || line.trim() === "") {
+          console.warn("❌ Ligne ignorée (format incorrect):", line);
+          // continue;c
+      }
+      
           const parts = line.trim().split(/\s+/);
+      
 
           if (parts.length >= 6) { 
               // 🟢 Identifier les indices des colonnes
+              const uid = parseInt(parts[0]); // ➕ Ajout du champ UID
               const lastIndex = parts.length - 1;
               const time = parts[lastIndex]; // Dernière colonne = Heure
               const date = parts[lastIndex - 1]; // Avant-dernière colonne = Date
@@ -145,16 +182,18 @@ function parseTXT(filePath, printerName) {
               const user = parts.slice(1, lastIndex - 3).join(" "); // Conserve le nom complet
 
               // 🔴 Correction de la date
-              const formattedDate = new Date(`20${date.split("/").reverse().join("-")}`);
+             
+              const formattedDate = new Date(`20${date.split("/")[0]}-${date.split("/")[1]}-${date.split("/")[2]}`);
 
               results.push({
+                  UID: uid, // 🔥 Stockage de l'UID
                   NameImp: printerName,
                   User: user,
                   Page: page,
                   Result: result,
                   Date: formattedDate,
                   Time: time,
-                  PrinterId: 1,
+                  PrinterId: printerId,
               });
           } else {
               console.warn("❌ Ligne ignorée (format incorrect):", line);
@@ -165,12 +204,12 @@ function parseTXT(filePath, printerName) {
   });
 }
 
-  function updateCumulativeFile(printerName, data) {
+function updateCumulativeFile(printerName, data) {
     const cumulativeFilePath = path.join(cumulativeDir, `${printerName}.txt`);
   
    // Convertir les données en format texte
     const fileData = data.map(row => 
-      `${row.User} ${row.Page} ${row.Result} ${row.Date.toISOString().split("T")[0]} ${row.Time}`
+      `${row.UID} ${row.User} ${row.Page} ${row.Result} ${row.Date.toISOString().split("T")[0]} ${row.Time}`
     ).join("\n");
   
     // Ajouter les nouvelles données au fichier cumulé
@@ -179,6 +218,7 @@ function parseTXT(filePath, printerName) {
       else console.log(`✅ Fichier cumulé mis à jour : ${cumulativeFilePath}`);
     });
   }
+
 //  Fonction pour enregistrer les données en base MySQL avec Sequelize
 // async function saveToDatabase(data,printerName,originalFilePath) {
 //     try {
@@ -198,11 +238,13 @@ function parseTXT(filePath, printerName) {
 //       console.error("❌ Erreur insertion BDD :", error);
 //     }
 //   }
+
 async function saveToDatabase(data, printerName, originalFilePath) {
   try {
       for (const entry of data) {
           const exists = await Impression.findOne({
               where: {
+                  UID: entry.UID,
                   NameImp: entry.NameImp,
                   User: entry.User,
                   Page: entry.Page,
