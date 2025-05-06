@@ -17,7 +17,7 @@ const MonthlyHeatmap = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/imprime/impressionsByMonth/${month}`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/imprime/impressionsByMonth/${month}`);
       const logs = res.data.data || [];
 
       const uniqueImprimantes = [...new Set(logs.map(log => log.NameImp))];
