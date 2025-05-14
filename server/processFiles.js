@@ -61,7 +61,7 @@ const getprinterid = async (printerName) => {
     return null;
   }
 
-  const url = `http://localhost:5000/api/printer/getPrinterId/${printerName}`;
+  const url = `${process.env.REACT_APP_API_URL}/api/printer/getPrinterId/${printerName}`;
   console.log("🌐 [getprinterid] URL appelée:", url);
 
   try {

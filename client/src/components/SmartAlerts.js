@@ -56,7 +56,7 @@ const SmartAlerts = ({ logs }) => {
 
       <div className="row g-2 mb-3">
         <div className="col-md-6">
-          <label>Seuil journalier (pages)</label>
+          <label>liste des imprimantes qui dépassent le nombre de pages indiqué </label>
           <input
             type="number"
             className="form-control"
@@ -65,7 +65,7 @@ const SmartAlerts = ({ logs }) => {
           />
         </div>
         <div className="col-md-6">
-          <label>Seuil de pic par tâche (pages)</label>
+          <label>liste des impressions qui ont dépassé la valeur indiquée </label>
           <input
             type="number"
             className="form-control"

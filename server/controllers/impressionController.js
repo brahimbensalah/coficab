@@ -135,7 +135,7 @@ getMonthlyImpressions: async (req, res) => {
       attributes: [
         'NameImp',
         [fn('DAY', col('Date')), 'day'],
-        [fn('COUNT', col('UID')), 'count']
+        [fn('SUM', col('Page')), 'count']
       ],
       group: ['NameImp', fn('DAY', col('Date'))],
       raw: true

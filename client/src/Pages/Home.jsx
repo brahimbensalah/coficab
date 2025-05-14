@@ -3,12 +3,9 @@ import axios from "axios";
 import '../CSS/Home.css';
 import Statistique from '../components/statistique.js' 
 import MonthlyHeatmap from '../components/MonthlyHeatmap.js'
-
 import SmartAnalytics from '../components/SmartAnalytics.js';
-
 import logo from '../Images/logo.png'
 import { exportToExcel, exportToPDF } from '../ExportExcelPdf';
-
 
 function Home() {
   const [logs, setLogs] = useState([]);
@@ -27,8 +24,6 @@ function Home() {
   const [endHour, setEndHour] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-
-
   useEffect(()=>{ 
     fetchhistorie();
     getAllprinterName();
@@ -39,68 +34,33 @@ function Home() {
   },[])
 
 
-  
-  // const handleFileUpload = (event) => {
-  //    setFile(event.target.files[0]); // Store the selected file   
-  // };
-// const handleFiltre = async () => {
-//   try {
-//     let url = "";
-//     let queryParams = [];
+ 
 
-//     if (filtretype !== "all") {
-//       queryParams.push(`printer=${filtretype}`);
-//     }
-
-//     if (startDate) queryParams.push(`startDate=${startDate}`);
-//     if (endDate) queryParams.push(`endDate=${endDate}`);
-//     if (userFilter) queryParams.push(`user=${userFilter}`);
-//     if (startHour) queryParams.push(`startHour=${startHour}`);
-//     if (endHour) queryParams.push(`endHour=${endHour}`);
-
-//     url = `http://localhost:5000/api/imprime/impressionsAdvanced`;
-//     if (queryParams.length > 0) {
-//       url += "?" + queryParams.join("&");
-//     }
-
-//     const { data } = await axios.get(url);
-//     setLogs(data);
-
-//   } catch (err) {
-//     console.error("Erreur lors du filtrage :", err);
-//   }
-// };
-//   const handleStartChange = (e) => {
-//     const newStartDate = e.target.value;
-//     setStartDate(newStartDate);
-//     if (endDate && newStartDate > endDate) {
-//       setEndDate(newStartDate);
-//     }
-//   };
 const handleFiltre = async () => {
   try {
     let url = "";
 
     if (filtretype === "all") {
       if (!startDate && !endDate) {
-        url = `http://localhost:5000/api/imprime/impressions`;
+        url = `${process.env.REACT_APP_API_URL}/api/imprime/impressions`;
       } else if (startDate && !endDate) {
-        url = `http://localhost:5000/api/imprime/impressionsByStartDate/${startDate}`;
+        url = `${process.env.REACT_APP_API_URL}/api/imprime/impressionsByStartDate/${startDate}`;
       } else if (startDate && endDate) {
-        url = `http://localhost:5000/api/imprime/impressionsByStartEndDate/${startDate}/${endDate}`;
+        url = `${process.env.REACT_APP_API_URL}/api/imprime/impressionsByStartEndDate/${startDate}/${endDate}`;
       }
     } else {
       if (!startDate && !endDate) {
-        url = `http://localhost:5000/api/imprime/impressionsByIMP/${filtretype}`;
+        url = `${process.env.REACT_APP_API_URL}/api/imprime/impressionsByIMP/${filtretype}`;
       } else if (startDate && !endDate) {
-        url = `http://localhost:5000/api/imprime/impressionsByImp&StartDate/${filtretype}/${startDate}`;
+        url = `${process.env.REACT_APP_API_URL}/api/imprime/impressionsByImp&StartDate/${filtretype}/${startDate}`;
       } else if (startDate && endDate) {
-        url = `http://localhost:5000/api/imprime/impressionsByImp&StartEndDate/${filtretype}/${startDate}/${endDate}`;
+        url = `${process.env.REACT_APP_API_URL}/api/imprime/impressionsByImp&StartEndDate/${filtretype}/${startDate}/${endDate}`;
       }
     }
 
     if (url) {
       const response = await axios.get(url);
+      console.log("API response", response.data);
       const data = response.data;
 
       setLogs(data);
@@ -121,7 +81,7 @@ const handleStartChange = (e) => {
 
 
   const getAllprinterName = () => {
-  axios.get(`http://localhost:5000/api/printer/getAllPrinterName`)
+  axios.get(`${process.env.REACT_APP_API_URL}/api/printer/getAllPrinterName`)
   .then((data)=>{
     setprinterName(data.data);
    
@@ -130,7 +90,8 @@ const handleStartChange = (e) => {
 }
 
   const fetchhistorie=()=>{
-    axios.get(`http://localhost:5000/api/imprime/impressions`)
+
+    axios.get(`${process.env.REACT_APP_API_URL}/api/imprime/impressions`)
     .then((data)=>{setLogs(data.data);})
     .catch(()=>{})
   }
@@ -151,7 +112,7 @@ const handleStartChange = (e) => {
         </span>
   </div>
 </nav>
-<div className="container-fluid">
+
 <div className="container-fluid"> 
  <br/> <br/> <br/>
  <div className="filter-section">
@@ -300,7 +261,7 @@ const handleStartChange = (e) => {
     </tbody>
   </table>
 </div>
-</div>
+
 
 </div>
 

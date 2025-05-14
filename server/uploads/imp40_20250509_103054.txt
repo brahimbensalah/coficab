@@ -1,0 +1,23 @@
+ ID          User      Page  Result      Time           
+--------------------------------------------------------
+ 1205                     1  Finished    --------------
+ 1206                     1  Finished    --------------
+ 1207                     1  Finished    --------------
+ 1208        roueslat     1  Finished    25/05/08 16:30
+ 1209        roueslat     1  Finished    25/05/08 16:31
+ 1210        roueslat     1  Finished    25/05/08 16:32
+ 1211        roueslat     1  Finished    25/05/08 16:34
+ 1212        roueslat     1  Finished    25/05/08 16:35
+ 1213        roueslat     1  Finished    25/05/08 16:35
+ 1214        roueslat     1  Finished    25/05/08 16:35
+ 1215        roueslat     1  Finished    25/05/08 16:36
+ 1216        roueslat     1  Finished    25/05/08 16:38
+ 1217        roueslat     1  Finished    25/05/08 16:38
+ 1218        roueslat     1  Finished    25/05/08 16:41
+ 1219                     1  Finished    --------------
+ 1220        roueslat     1  Finished    25/05/09 09:26
+ 1221        roueslat     1  Finished    25/05/09 09:27
+ 1222                     1  Finished    --------------
+ 1223                     1  Finished    --------------
+ 1224                     1  Finished    --------------
+
