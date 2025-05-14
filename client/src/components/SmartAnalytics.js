@@ -38,11 +38,11 @@ const SmartAnalytics = ({ logs }) => {
     <div className="card p-3 shadow mb-4">
       <h5 className="mb-3">🧠 Analyse intelligente</h5>
       <ul className="list-group list-group-flush">
-        <li className="list-group-item">
+        {/* <li className="list-group-item">
           📊 <strong>Moyenne pages/impression :</strong> {moyennePages}
-        </li>
+        </li> */}
         <li className="list-group-item">
-          🧾 <strong>Estimation papier/mois :</strong> {previsionPapier} pages
+          🧾 <strong>Consommation papier par mois :</strong> {previsionPapier} pages
         </li>
         <li className="list-group-item">
           ⚠️ <strong>Anomalies détectées :</strong>{" "}

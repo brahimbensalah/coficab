@@ -7,7 +7,6 @@ import SmartAnalytics from '../components/SmartAnalytics.js';
 import logo from '../Images/logo.png'
 import { exportToExcel, exportToPDF } from '../ExportExcelPdf';
 
-
 function Home() {
   const [logs, setLogs] = useState([]);
   const [printerName, setprinterName] = useState([]);
@@ -24,8 +23,6 @@ function Home() {
   const [startHour, setStartHour] = useState('');
   const [endHour, setEndHour] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
-
-
 
   useEffect(()=>{ 
     fetchhistorie();
@@ -115,7 +112,7 @@ const handleStartChange = (e) => {
         </span>
   </div>
 </nav>
-<div className="container-fluid">
+
 <div className="container-fluid"> 
  <br/> <br/> <br/>
  <div className="filter-section">
@@ -264,7 +261,7 @@ const handleStartChange = (e) => {
     </tbody>
   </table>
 </div>
-</div>
+
 
 </div>
 

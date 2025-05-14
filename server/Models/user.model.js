@@ -1,23 +1,46 @@
-// module.exports = (sequelize, DataTypes) => {
-//     const User = sequelize.define("User", {
-//       id: {
-//         type: DataTypes.INTEGER,
-//         autoIncrement: true,
-//         primaryKey: true,
-//       },
-//       userName: {
-//         type: DataTypes.STRING,
-//         unique: true,
-//         allowNull: false,
-//       },
-//       departement: {
-//         type: DataTypes.STRING,
-//         defaultValue: "all",
-//       },
-//     });
-  
+module.exports = (sequelize, DataTypes) => {
+    const Users = sequelize.define("Users", {
+      UserCode: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
+      UserName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      Profile: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+      },
+      Fonction: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+      },
+      Departement: {
+        type: DataTypes.STRING,        
+      },
+      phonenumber: {
+        type: DataTypes.INTEGER,    
+      },
+      NeDepassePas: {
+        type: DataTypes.INTEGER,        
+      },
+      Mail: {
+        type: DataTypes.STRING,        
+      },
+   
+      PageImprimer: {
+        type: DataTypes.INTEGER,        
+      },
+    },
+    {
+        tableName: 'Users',
+        timestamps: false
+      });
 
   
-//     return User;
-//   };
+    return Users;
+  };
   

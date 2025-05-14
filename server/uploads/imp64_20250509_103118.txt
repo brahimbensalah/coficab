@@ -1,0 +1,18 @@
+ ID          User      Page  Result      Time           
+--------------------------------------------------------
+ 1           mguarchi     6  Finished    25/05/08 16:33
+ 2           mguarchi     6  Finished    25/05/08 16:35
+ 3           mguarchi     6  Finished    25/05/08 16:35
+ 4           mguarchi     1  Finished    25/05/08 16:36
+ 5           mguarchi     1  Finished    25/05/08 16:39
+ 6           mguarchi     6  Finished    25/05/08 16:52
+ 7           mguarchi     6  Finished    25/05/08 16:58
+ 8           mguarchi     6  Finished    25/05/08 17:06
+ 9           mguarchi     6  Finished    25/05/08 17:18
+ 10          mguarchi     6  Finished    25/05/09 09:10
+ 11          mguarchi     1  Finished    25/05/09 09:20
+ 12          mguarchi     6  Finished    25/05/09 09:26
+ 13          mguarchi     6  Finished    25/05/09 10:24
+ 14          mguarchi     6  Finished    25/05/09 10:27
+ 15          mguarchi     6  Finished    25/05/09 10:28
+

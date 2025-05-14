@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const imprimeRoutes = require("./routes/imprime.routes");
 const printRoutes = require("./routes/printer.routes");
+const userRoutes = require("./routes/user.routes");
 const { downloadFile } = require("./ftpDownload"); // 🔹 Importation du script FTP
 const { downloadFromAllPrinters } = require("./ftpDownload");
 const { processNewFiles } = require("./processFiles"); // 🔹 Importation du script de traitement
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/../client/dist"));
 app.use("/api/imprime", imprimeRoutes);
 app.use("/api/printer", printRoutes);
+app.use("/api/user", userRoutes);
 
 
 
