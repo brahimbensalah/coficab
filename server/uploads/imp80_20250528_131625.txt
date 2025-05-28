@@ -1,0 +1,21 @@
+ ID          User      Page  Result      Time           
+--------------------------------------------------------
+ 1           rlouati      2  Finished    25/05/27 15:12
+ 2           rlouati      2  Canceled    25/05/27 15:13
+ 3           rlouati     40  Finished    25/05/27 15:13
+ 4           rlouati     40  Finished    25/05/27 15:16
+ 5           rlouati     20  Finished    25/05/27 15:22
+ 6           rlouati      5  Finished    25/05/28 07:36
+ 7           rlouati      1  Finished    25/05/28 07:38
+ 8           bhammami     5  Finished    25/05/28 08:52
+ 9           rlouati      2  Finished    25/05/28 09:45
+ 10          rlouati      2  Finished    25/05/28 09:45
+ 11          bhammami     1  Finished    25/05/28 10:37
+ 12          rlouati      4  Finished    25/05/28 10:54
+ 13          rlouati      4  Finished    25/05/28 10:58
+ 14          rlouati      5  Finished    25/05/28 11:05
+ 15          rlouati      5  Finished    25/05/28 11:05
+ 16          rlouati      4  Finished    25/05/28 11:06
+ 17          rlouati      4  Finished    25/05/28 11:06
+ 18          rlouati      1  Finished    25/05/28 11:09
+

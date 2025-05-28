@@ -1,0 +1,23 @@
+ ID          User      Page  Result      Time           
+--------------------------------------------------------
+ 193         hhamroun     1  Finished    25/05/28 11:56
+ 194         hhamroun     1  Finished    25/05/28 11:56
+ 195         hhamroun     1  Finished    25/05/28 11:57
+ 196         hhamroun     1  Finished    25/05/28 11:58
+ 197         hhamroun     1  Finished    25/05/28 11:58
+ 198         hhamroun     1  Finished    25/05/28 11:58
+ 199         hhamroun     1  Finished    25/05/28 11:59
+ 200         hhamroun     1  Finished    25/05/28 12:00
+ 201         hhamroun     1  Finished    25/05/28 12:01
+ 202         hhamroun     1  Finished    25/05/28 12:01
+ 203         hhamroun     1  Finished    25/05/28 12:07
+ 204         hhamroun     1  Finished    25/05/28 12:07
+ 205         lbarkia      4  Finished    25/05/28 12:09
+ 206         naoui       12  Finished    25/05/28 12:00
+ 207         lbarkia      4  Finished    25/05/28 12:10
+ 208         hhamroun     1  Finished    25/05/28 12:17
+ 209         malielhi     2  Finished    25/05/28 12:28
+ 210         malielhi     1  Finished    25/05/28 12:29
+ 211         hhamroun     1  Finished    25/05/28 12:31
+ 212         rguesmi      2  Finished    25/05/28 13:03
+

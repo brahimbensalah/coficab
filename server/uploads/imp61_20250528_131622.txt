@@ -1,0 +1,23 @@
+ ID          User      Page  Result      Time           
+--------------------------------------------------------
+ 68          hsaafi       1  Finished    25/05/28 10:50
+ 69          hsaafi       1  Finished    25/05/28 10:51
+ 70          nghizaou     2  Finished    25/05/28 10:51
+ 71          nghizaou     2  Finished    25/05/28 10:57
+ 72          chouimel     2  Finished    25/05/28 11:01
+ 73          chouimel     1  Finished    25/05/28 11:15
+ 74          chouimel     2  Finished    25/05/28 11:15
+ 75          chouimel     1  Finished    25/05/28 11:21
+ 76          chouimel     1  Finished    25/05/28 11:26
+ 77          czouaoui     1  Finished    25/05/28 11:26
+ 78          czouaoui     1  Finished    25/05/28 11:27
+ 79          czouaoui     1  Finished    25/05/28 11:28
+ 80          nghizaou     2  Finished    25/05/28 11:27
+ 81          czouaoui     1  Finished    25/05/28 11:33
+ 82          hsaafi       1  Finished    25/05/28 11:42
+ 83          hsaafi       1  Finished    25/05/28 11:43
+ 84          czouaoui     1  Finished    25/05/28 11:46
+ 85          czouaoui     1  Finished    25/05/28 11:49
+ 86          czouaoui     1  Finished    25/05/28 11:52
+ 87          hsaafi       2  Finished    25/05/28 12:05
+

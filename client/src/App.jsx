@@ -1,5 +1,7 @@
 import React from "react";
-import Home from "./Pages/Home.jsx";
+import CofatItServices from "./Pages/CofatItServices.js";
+import LandingPage from "./Pages/LandingPage.js";
+
 import {BrowserRouter as Router, Route,Routes} from  'react-router-dom'; 
 import  { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle.js";
@@ -15,18 +17,17 @@ let App = () => {
   return (
 
     <>
-        <div className={`container-fluid py-4`}>
-        <ThemeToggle theme={theme} setTheme={setTheme} />
+        
     <Router>
      <div>
       <Routes>
-        <Route exact  path="/" element={<Home/>} >  </Route>
-        {/* <Route  path="/About" element={<About/>} >  </Route> */}
+        <Route  path="/LandingPage" element={<LandingPage/>} >  </Route>
+        <Route exact  path="/CofatItServices" element={<CofatItServices/>} >  </Route>
 
       </Routes>
     </div>
    </Router>
-   </div>
+ 
    </>
 
   );

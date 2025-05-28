@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
+import { exportToExcel, exportToPDF } from '../ExportExcelPdf';
 import axios from "axios";
 import '../CSS/Home.css';
 import Statistique from '../components/statistique.js' 
 import MonthlyHeatmap from '../components/MonthlyHeatmap.js'
 import SmartAnalytics from '../components/SmartAnalytics.js';
 import logo from '../Images/logo.png'
-import { exportToExcel, exportToPDF } from '../ExportExcelPdf';
 
-function Home() {
+function CofatItServices() {
   const [logs, setLogs] = useState([]);
   const [printerName, setprinterName] = useState([]);
   const [filtretype, setType] = useState("all");
@@ -104,7 +104,7 @@ const handleStartChange = (e) => {
 {/* <!-- Page Content --> */}
 <nav className="navbar " >
   <div className="container-fluid">
-    <a className="navbar-brand" href="">
+    <a className="navbar-brand" href="/LandingPage">
       <img src={logo} alt="" className="d-inline-block align-text-top"/>      
     </a>
   <span className="navbar-text text-white d-flex" style={{backgroundColor:"#020495"}}>
@@ -271,4 +271,4 @@ const handleStartChange = (e) => {
   );
 }
 
-export default Home;
+export default CofatItServices;
